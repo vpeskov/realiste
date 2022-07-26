@@ -44,6 +44,10 @@ module TelegramSpeech
       response = Net::HTTP.get_response(uri)
       if response.is_a?(Net::HTTPSuccess)
         @voice_buffer = response.body
+
+        # Для тестирования сохраняем файл
+        # File.open("test_audio_file.ogg","wb") {|f| f.write(@voice_buffer) }
+
       else
         raise(TelegramSpeech::TelegramError)
       end

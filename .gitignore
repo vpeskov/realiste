@@ -9,5 +9,3 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
-
-*.txt

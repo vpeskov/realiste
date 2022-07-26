@@ -3,7 +3,12 @@ require './telegram_speech'
 require './yandex_cloud'
 
 # Настройки для Telegram bot
-TELEGRAM_KEY = '5378892321:AAGv3hDjoZn2Om6TO3yCKLoGLAzL2ZQvwM0'
+TELEGRAM_KEY = ENV['TELEGRAM_KEY']
+
+# Настройки для Yandex SpeechCloud API
+YANDEX_OAUTH_TOKEN = ENV['YANDEX_OAUTH_TOKEN']
+YANDEX_API_SIMPLE_KEY = ENV['YANDEX_API_SIMPLE_KEY']
+CATALOG_ID = ENV['YANDEX_CATALOG_ID']
 
 include TelegramSpeech
 
@@ -21,7 +26,10 @@ loop do
             voice_message = TelegramVoiceMsg.new(TELEGRAM_KEY, rqst.voice.file_id)
             voice_message.get_voice_from_msg
 
-            yandex_voice_recognize = YandexSpeechRecognition.new(voice_message.voice_buffer)
+            yandex_voice_recognize = ( rqst.voice.duration > 30 ) ?
+              YandexLongSpeechRecognition.new(voice_message.voice_buffer) :
+              YandexShortSpeechRecognition.new(voice_message.voice_buffer)
+
             voice_speech = yandex_voice_recognize.recognize
             puts "Результат выполнения:\n#{voice_speech}"
 
