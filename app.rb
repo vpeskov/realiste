@@ -12,8 +12,8 @@ CATALOG_ID = ENV['YANDEX_CATALOG_ID']
 
 include TelegramSpeech
 
-puts "Запускаем наш telegram bot и будем распознавать голосовые сообщения"
-puts "Нажмите Ctrl-C для завершения работы..."
+puts "Starting telegram bot and we will recognize voice messages"
+puts "Press Ctrl-C for exit..."
 
 loop do
   begin
@@ -54,11 +54,11 @@ loop do
           end
         rescue => err
           bot.api.send_message(chat_id: rqst.chat.id, text: "При работе с ботом произошла ошибка")
-          puts "Ошибка работы бота #{err}"
+          puts "Error in telegram bot #{err}"
         end
       end
     end
   rescue => err
-    puts "Что то пошло не так, ошибка: #{err}"
+    puts "Something went wrong, error: #{err}"
   end
 end
